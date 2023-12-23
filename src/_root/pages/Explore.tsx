@@ -10,30 +10,31 @@ import { FaTimes } from "react-icons/fa"
 
 const Explore = () => {
 
-    const { ref, inView } = useInView()
+    const { ref, inView } = useInView();
     const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-    const [searchValue, setSearchValue] = useState("")
-    const debounceValue = useDebounce(searchValue, 500)  // recall after every 500ms 
-    const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debounceValue)
+    const [searchValue, setSearchValue] = useState("");
+    const debouncedSearch = useDebounce(searchValue, 500);
+    const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debouncedSearch);
 
     useEffect(() => {
-
-        if (inView && !searchValue) fetchNextPage()
-
+        if (inView && !searchValue) {
+            fetchNextPage();
+        }
     }, [inView, searchValue]);
 
-
-    if (!posts) {
+    if (!posts)
         return (
-            <div className="w-full h-full flex-center ">
+            <div className="flex-center w-full h-full">
                 <Loader />
             </div>
-        )
-    }
+        );
 
-    const shouldShowSearchResults = searchValue !== ''  // if searchValue is not empty
-    const shouldShowPosts = !shouldShowSearchResults && posts?.pages.every
-        ((item) => item?.documents.length === 0)
+    const shouldShowSearchResults = searchValue !== "";
+    const shouldShowPosts = !shouldShowSearchResults &&
+        posts.pages.every((item) => item?.documents.length === 0);  // if length == 0 , returns true
+    // console.log(shouldShowPosts)
+    // console.log(posts.pages.every((item) => item?.documents.length === 0))
+    // posts.pages.map((item, index) => console.log(item?.documents))
 
     return (
         <div className='explore-container'>
@@ -82,22 +83,20 @@ const Explore = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-wrap gap-9 w-full max-w-5xl">
-                {shouldShowSearchResults ?
-                    (
-                        <SearchResults
-                            isSearchFetching={isSearchFetching}
-                            searchedPosts={searchedPosts}
-                        />)
-                    : shouldShowPosts ? (
-                        <p className='text-light-4 text-center w-full mt-10'>End of posts </p>
 
-                    ) : posts.pages.map((item, index) => (
-                        <GridPostList
-                            key={`page-${index}`}
-                            posts={item.documents}
-                        />
-                    ))}
+            <div className="flex flex-wrap gap-9 w-full max-w-5xl">
+                {shouldShowSearchResults ? (
+                    <SearchResults
+                        isSearchFetching={isSearchFetching}
+                        searchedPosts={searchedPosts}
+                    />
+                ) : shouldShowPosts ? (
+                    <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
+                ) : (
+                    posts.pages.map((item, index) => (
+                        <GridPostList key={`page-${index}`} posts={item.documents} />
+                    ))
+                )}
             </div>
             {hasNextPage && !searchValue && (
                 <div ref={ref} className='mt-10'>
