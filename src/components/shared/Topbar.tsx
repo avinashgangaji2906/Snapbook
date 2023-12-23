@@ -22,7 +22,7 @@ const Topbar = () => {
                 <Link to="/"
                     className="flex gap-3 flex-center">
                     <img
-                        src="/assets/images/logo.svg"
+                        src="/assets/images/Snapbook-poster.svg"
                         alt="logo"
                         width={130}
                         height={325}
