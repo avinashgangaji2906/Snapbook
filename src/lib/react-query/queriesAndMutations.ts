@@ -207,18 +207,46 @@ export const useDeletePost = () => {
   });
 };
 
+// export const useGetPosts = () => {
+//   return useInfiniteQuery({
+//     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+//     queryFn: getInfinitePosts as any,
+//     getNextPageParam: (lastPage: any) => {
+//       // Check if lastPage exists and has documents array
+//       if (lastPage && lastPage.documents && lastPage.documents.length === 0) {
+//         return null;
+//       }
+//       // Check if lastPage and documents array are properly defined
+//       if (lastPage && Array.isArray(lastPage.documents) && lastPage.documents.length > 0) {
+//         // Use the $id of the last document as the cursor.
+//         const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+//         return lastId;
+//       }
+//       return null; // Return null if the conditions are not met
+//     },
+//   })
+// };
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitePosts,
-
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) return null;
-
-      const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id;
-
-      return lastId;
+    queryFn: getInfinitePosts as any,
+    getNextPageParam: (lastPage: any) => {
+      // Check for lastPage and return the next page parameter
+      if (lastPage && lastPage.documents && lastPage.documents.length === 0) {
+        return null;
+      }
+      if (
+        lastPage &&
+        Array.isArray(lastPage.documents) &&
+        lastPage.documents.length > 0
+      ) {
+        // Use the $id of the last document as the cursor.
+        const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+        return lastId;
+      }
+      return null;
     },
+    initialPageParam: null, // Add an initialPageParam here if applicable
   });
 };
 
