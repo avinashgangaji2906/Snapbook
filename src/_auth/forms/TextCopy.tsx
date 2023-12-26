@@ -31,7 +31,7 @@ const TextCopy = () => {
     return (
         <div className="w-1/2 flex flex-col  mt-10 gap-2 flex-center text-sm ">
             <div className="flex gap-4">
-                <p className="">Demo Email :
+                <p >Demo Email :
                     <span ref={emailTextRef} className=" text-light-3 ml-2 hover:text-off-white hover:font-medium">johnsnow@gmail.com</span>
                 </p>
                 <button

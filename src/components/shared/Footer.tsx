@@ -2,9 +2,9 @@ import { IconType } from 'react-icons';
 import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 const socialIcons: { icon: IconType; link: string }[] = [
-    { icon: FaGithub, link: 'https://github.com/example' },
-    { icon: FaTwitter, link: 'https://twitter.com/example' },
-    { icon: FaLinkedin, link: 'https://linkedin.com/in/example' },
+    { icon: FaGithub, link: 'https://github.com/avinashgangaji2906/Snapbook' },
+    { icon: FaTwitter, link: 'https://twitter.com/avinash_gangaji' },
+    { icon: FaLinkedin, link: 'https://www.linkedin.com/feed/update/urn:li:activity:7145047210584436736/' },
 ];
 
 const Footer: React.FC = () => {

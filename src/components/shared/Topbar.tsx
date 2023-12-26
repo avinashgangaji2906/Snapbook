@@ -5,16 +5,19 @@ import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
 
 const Topbar = () => {
-    const { mutate: signOut, isSuccess } = useSignOutAccount()
+    const { mutate: signOut, isSuccess, isError } = useSignOutAccount()
     const navigate = useNavigate();
     const { user } = useUserContext()
 
     useEffect(() => {
-        if (isSuccess)
-            // navigate("/sign-in")
-            navigate(0) // means navigate to signup/ signin
+        if (isSuccess) {
+            navigate("/sign-in")
+        } if (isError) {
+            console.log("Logout Failed ", isError);
+        }
     }, [isSuccess])
 
+    console.log("userid ", user.id);
 
     return (
         <section className="topbar">

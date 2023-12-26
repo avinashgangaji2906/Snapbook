@@ -84,13 +84,16 @@ export async function getCurrentUser() {
   }
 }
 
-// ++++++++++++++ sign out ++++++++++++++++++++++++++++++++++++++++++++
+// ++++++++++++++ logout/sign out ++++++++++++++++++++++++++++++++++++++++++++
 export async function signOutAccount() {
   try {
     const session = await account.deleteSession("current");
+    console.log("logout succesfully");
+
     return session;
   } catch (error) {
-    console.log(error);
+    console.error("Logout Error:", error);
+    throw error;
   }
 }
 
