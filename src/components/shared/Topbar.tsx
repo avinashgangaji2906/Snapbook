@@ -17,7 +17,6 @@ const Topbar = () => {
         }
     }, [isSuccess])
 
-    console.log("userid ", user.id);
 
     return (
         <section className="topbar">
